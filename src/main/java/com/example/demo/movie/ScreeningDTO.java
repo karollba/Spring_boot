@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @AllArgsConstructor
 @Getter
@@ -15,18 +16,21 @@ import java.util.Date;
 public class ScreeningDTO {
 
     private Long id;
-    private Movie movie;
+    private String movieTitle;
+    private List<Actor> actors;
+    private Director director;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    private CinemaHall cinemaHall;
     private Date date;
+    private String cinemaHall;
 
     public ScreeningDTO(Screening screening) {
         this.id = screening.getId();
-        this.movie = screening.getMovie();
+        this.movieTitle = screening.getMovie().getTitle();
         this.startTime = screening.getStartTime();
         this.endTime = screening.getEndTime();
-        this.cinemaHall = screening.getCinemaHall();
+        this.director = screening.getMovie().getDirector();
         this.date = screening.getDate();
+        this.cinemaHall = screening.getCinemaHall().getName();
     }
 }

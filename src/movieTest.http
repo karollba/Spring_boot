@@ -1,0 +1,14 @@
+
+
+### Get all
+GET http://localhost:8080/cinema/all/2026-08-27
+
+
+
+### Get movie by ID
+GET http://localhost:8080/cinema/movie/1
+
+
+### Get screenings by ID
+GET http://localhost:8080/cinema/screenings/1
+

@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ScreenService {
@@ -14,8 +15,11 @@ public class ScreenService {
         this.screenRepository = screenRepository;
     }
 
-    public List<Screening> getAll() {
-        return screenRepository.findAll();
+    public List<ScreeningDTO> getAll() {
+        return screenRepository.findAll()
+                .stream()
+                .map(ScreeningDTO::new)
+                .collect(Collectors.toList());
     }
 
     public ScreeningDTO findByDay(Date date) {
@@ -26,5 +30,14 @@ public class ScreenService {
         return new ScreeningDTO(screening);
     }
 
+    public ScreeningDTO findById(Long id) {
+        Screening screening = screenRepository.findById(id).orElse(null);
+
+        if (screening == null) {
+            return  null;
+        }
+
+        return new ScreeningDTO(screening);
+    }
 
 }
