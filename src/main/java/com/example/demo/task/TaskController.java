@@ -9,21 +9,21 @@ import java.util.List;
 @RestController
 @RequestMapping("/tasks")
 public class TaskController {
-    private final TaskRepository taskRepository;
+    private final TaskService taskService;
 
-    public TaskController(TaskRepository taskRepository) {
-        this.taskRepository = taskRepository;
+    public TaskController(TaskService taskService) {
+        this.taskService = taskService;
     }
 
     @GetMapping("/all")
     public List<Task> getAll() {
-        return taskRepository.findAll();
+        return taskService.getAll();
     }
 
     // get by id
     @GetMapping("/{id}")
-    public ResponseEntity<Task> getById(@PathVariable Long id) {
-        Task task = taskRepository.findById(id).orElse(null);
+    public ResponseEntity<TaskDto> getById(@PathVariable Long id) {
+        TaskDto task = taskService.findById(id);
         if (task == null) {
             return ResponseEntity.notFound().build();
         }
@@ -31,53 +31,52 @@ public class TaskController {
         return ResponseEntity.ok(task);
     }
 
-    @GetMapping("/add")
-    public String add(Model model) {
-        model.addAttribute("task", new Task());
-        return "tasks/add";
-    }
+//    @GetMapping("/add")
+//    public String add(Model model) {
+//        model.addAttribute("task", new Task());
+//        return "tasks/add";
+//    }
 
     @PostMapping("/add")
-    public ResponseEntity<Task> create(@RequestBody Task task) {
-        taskRepository.save(task);
-        return ResponseEntity.status(201).body(task);
+    public ResponseEntity<TaskDto> create(@RequestBody Task task) {
+        taskService.save(task);
+        return ResponseEntity.status(201).body(new TaskDto(task));
     }
-
-
 
     // aktualizuj zad
     @PutMapping("/update/{id}")
     public ResponseEntity<Task> update(@PathVariable Long id,
                                        @RequestBody Task updated) {
-        Task task = taskRepository.findById(id).orElse(null);
+
+        Task task = taskService.findTasksById(id);
         if (task == null) {
             return ResponseEntity.notFound().build();
         }
 
         task.setTitle(updated.getTitle());
         task.setDescription(updated.getDescription());
-        taskRepository.save(task);
+        taskService.save(task);
         return  ResponseEntity.ok(task);
     }
 
     @PatchMapping("/status/{id}/complete")
     public ResponseEntity<Task> complete(@PathVariable Long id) {
-        Task task = taskRepository.findById(id).orElse(null);
+        Task task = taskService.findTasksById(id);
 
         if (task == null) {
             return ResponseEntity.notFound().build();
         }
         task.setCompleted(true);
-        taskRepository.save(task);
+        taskService.save(task);
         return ResponseEntity.ok(task);
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {
-        if (!taskRepository.existsById(id)) {
+        if (!taskService.exists(id)) {
             return  ResponseEntity.notFound().build();
         }
-        taskRepository.deleteById(id);
+        taskService.delete(id);
         return ResponseEntity.noContent().build();
     }
 

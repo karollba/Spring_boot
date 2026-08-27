@@ -15,10 +15,10 @@ GET http://localhost:8080/tasks/all
 
 
 ### Get by ID
-GET http://localhost:8080/tasks/1
+GET http://localhost:8080/tasks/10
 
 ### Update task
-PUT http://localhost:8080/tasks/update/7
+PUT http://localhost:8080/tasks/update/10
 Content-Type: application/json
 
 {
@@ -40,10 +40,10 @@ Content-Type: application/json
 
 
 ### Mark  as completed
-PATCH http://localhost:8080/tasks/status/9/complete
+PATCH http://localhost:8080/tasks/status/10/complete
 
 
 
 ### Delete task
-DELETE http://localhost:8080/tasks/delete/9
+DELETE http://localhost:8080/tasks/delete/8
 

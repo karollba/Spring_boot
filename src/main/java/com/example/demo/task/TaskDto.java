@@ -1,8 +1,8 @@
 package com.example.demo.task;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
+@AllArgsConstructor
 @Getter
 @Setter
 @Builder
@@ -13,10 +13,11 @@ public class TaskDto {
     private String description;
     private boolean completed;
 
-    public TaskDto(Long id, String title, String description, boolean completed) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.completed = completed;
+    public TaskDto(Task task) {
+        this.id = task.getId();
+        this.title = task.getTitle();
+        this.description = task.getDescription();
+        this.completed = task.isCompleted();
     }
+
 }

@@ -44,5 +44,13 @@ public class TaskService {
         repository.deleteById(id);
     }
 
+    public boolean exists(Long id) {
+        return repository.existsById(id);
+    }
+
+    public Task findTasksById(Long id) {
+        return repository.findById(id).orElse(null);
+    };
+
 
 }
