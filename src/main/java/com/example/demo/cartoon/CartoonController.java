@@ -1,6 +1,7 @@
 package com.example.demo.cartoon;
 
 import com.example.demo.exception.ErrorCode;
+import com.example.demo.exception.MissingArgumentException;
 import com.example.demo.exception.ResourceNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,5 +29,12 @@ public class CartoonController {
         return cartoonRepository.findById(id)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(String.format("cartoon %d not found", id), ErrorCode.CODE3.toString()));
+    }
+
+    @GetMapping("/api/{id}")
+    public Cartoon missingArgs(@PathVariable Long id) {
+        return cartoonRepository.findById(id)
+                .orElseThrow(() ->
+                        new MissingArgumentException(String.format("parameter 'name' is required "), ErrorCode.CODE4.toString()));
     }
 }

@@ -16,4 +16,11 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         apiError.setCode(ex.getErrorCode());
         return new ResponseEntity<>(apiError, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(MissingArgumentException.class)
+    protected ResponseEntity<Object> handleMissingArgs(MissingArgumentException ex) {
+        CustomError apiError = new CustomError(ex);
+        apiError.setCode(ex.getErrorCode());
+        return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
+    }
 }
