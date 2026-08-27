@@ -1,6 +1,5 @@
 package com.example.demo.movie;
 
-import ch.qos.logback.core.pattern.util.RegularEscapeUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
