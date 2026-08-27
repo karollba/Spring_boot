@@ -1,12 +1,11 @@
 package com.example.demo.drink;
 
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -37,6 +36,33 @@ public class DrinkController {
         repository.save(drink);
         ra.addFlashAttribute("message", "Drink utworzony.");
         return "redirect:/drink/list";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String edit(@PathVariable Long id, Model model){
+        model.addAttribute("drink", repository.getById(id));
+        return "/drink/edit";
+    }
+    @PostMapping("/edit")
+    public String editDrink(@Valid @ModelAttribute("drink") Drink drink, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return "drink/edit";
+        }
+        repository.save(drink);
+        return "redirect:/drink/list";
+    }
+
+    @GetMapping("/{id}/delete")
+    public String add(@PathVariable Long id){
+        repository.deleteById(id);
+        return "redirect:/drink/list";
+    }
+
+
+    @GetMapping("/api/lvl1")
+    public String getApi() {
+        return "ok";
     }
 
 }

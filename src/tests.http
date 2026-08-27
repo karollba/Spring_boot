@@ -1,0 +1,49 @@
+### Add task
+POST http://localhost:8080/tasks/add
+Content-Type: application/json
+
+{
+  "title": "Moj task",
+  "description": "Test",
+  "completed": false
+}
+
+
+### Get all
+GET http://localhost:8080/tasks/all
+
+
+
+### Get by ID
+GET http://localhost:8080/tasks/1
+
+### Update task
+PUT http://localhost:8080/tasks/update/7
+Content-Type: application/json
+
+{
+  "title": "Po update",
+  "description": "Nowy opis"
+}
+
+
+
+### Update non-existing task
+PUT http://localhost:8080/tasks/update/999999
+Content-Type: application/json
+
+{
+  "title": "Po update",
+  "description": "Nowy opis"
+}
+
+
+
+### Mark  as completed
+PATCH http://localhost:8080/tasks/status/9/complete
+
+
+
+### Delete task
+DELETE http://localhost:8080/tasks/delete/9
+
