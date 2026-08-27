@@ -10,6 +10,6 @@ import java.util.List;
 
 public interface ScreenRepository  extends JpaRepository<Screening, Long> {
 
-    @Query("select s from Screening s where cast(s.date as string) like:date% ")
+    @Query("select s from Screening s where cast(s.date as string) like %:date% ")
     List<Screening> findByDate(@Param("date") String date);
 }

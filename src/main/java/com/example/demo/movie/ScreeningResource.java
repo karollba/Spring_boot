@@ -7,9 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -19,13 +16,13 @@ public class ScreeningResource {
     private final ScreenService screenService;
     private final MovieService movieService;
 
-    public ScreeningResource(ScreenService screenService, MovieService movieService) {
+    public ScreeningResource(ScreenService screenService, MovieService movieService, ScreenRepository screenRepository) {
         this.screenService = screenService;
         this.movieService = movieService;
     }
 
     @GetMapping("/all/{date}")
-    public ResponseEntity<List<ScreeningDTO>> getAllByDay(@PathVariable String date) throws ParseException {
+    public ResponseEntity<List<ScreeningDTO>> getAllByDay(@PathVariable String date) {
         List<ScreeningDTO> screeningDTO = screenService.findByDay(date);
         if (screeningDTO == null) {
             return ResponseEntity.notFound().build();
