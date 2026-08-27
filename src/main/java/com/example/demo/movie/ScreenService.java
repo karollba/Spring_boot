@@ -1,5 +1,6 @@
 package com.example.demo.movie;
 
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -22,12 +23,12 @@ public class ScreenService {
                 .collect(Collectors.toList());
     }
 
-    public ScreeningDTO findByDay(Date date) {
-        Screening screening = screenRepository.findByDate(date);
-        if (screening == null) {
-            return null;
-        }
-        return new ScreeningDTO(screening);
+    @Transactional
+    public List<ScreeningDTO> findByDay(String date) {
+        return screenRepository.findByDate(date)
+                .stream()
+                .map(ScreeningDTO::new)
+                .collect(Collectors.toList());
     }
 
     public ScreeningDTO findById(Long id) {
@@ -39,5 +40,6 @@ public class ScreenService {
 
         return new ScreeningDTO(screening);
     }
+
 
 }

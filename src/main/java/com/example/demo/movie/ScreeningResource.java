@@ -25,10 +25,8 @@ public class ScreeningResource {
     }
 
     @GetMapping("/all/{date}")
-    public ResponseEntity<ScreeningDTO> getAllByDay(@PathVariable String date) throws ParseException {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        Date parsed = format.parse(date);
-        ScreeningDTO screeningDTO = screenService.findByDay(parsed);
+    public ResponseEntity<List<ScreeningDTO>> getAllByDay(@PathVariable String date) throws ParseException {
+        List<ScreeningDTO> screeningDTO = screenService.findByDay(date);
         if (screeningDTO == null) {
             return ResponseEntity.notFound().build();
         }

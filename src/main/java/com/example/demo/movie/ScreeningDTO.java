@@ -32,5 +32,6 @@ public class ScreeningDTO {
         this.director = screening.getMovie().getDirector();
         this.date = screening.getDate();
         this.cinemaHall = screening.getCinemaHall().getName();
+        this.actors = screening.getMovie().getActors();
     }
 }
